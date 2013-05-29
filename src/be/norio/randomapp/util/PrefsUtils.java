@@ -37,7 +37,8 @@ public class PrefsUtils {
 	private static boolean APPLY_AVAILABLE = false;
 
 	// Keys
-	public static final String KEY_PREVIOUS_APP = "language";
+	public static final String KEY_PREVIOUS_PACKAGE = "prev_package";
+	public static final String KEY_PREVIOUS_DATE = "prev_date";
 	// Default values
 
 	private static Context CONTEXT;
@@ -83,12 +84,20 @@ public class PrefsUtils {
 		return CONTEXT;
 	}
 
-	public static String getPreviousApp() {
-		return getPrefs().getString(KEY_PREVIOUS_APP, null);
+	public static String getPreviousPackageName() {
+		return getPrefs().getString(KEY_PREVIOUS_PACKAGE, null);
 	}
 
-	public static void setPreviousApp(String packageName) {
-		PrefsUtils.apply(getPrefs().edit().putString(KEY_PREVIOUS_APP, packageName));
+	public static void setPreviousPackageName(String packageName) {
+		PrefsUtils.apply(getPrefs().edit().putString(KEY_PREVIOUS_PACKAGE, packageName));
+	}
+
+	public static long getPreviousDate() {
+		return getPrefs().getLong(KEY_PREVIOUS_DATE, 0);
+	}
+
+	public static void setPreviousDate(long value) {
+		PrefsUtils.apply(getPrefs().edit().putLong(KEY_PREVIOUS_DATE, value));
 	}
 
 }
