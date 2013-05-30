@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="be.norio.randomapp" default="build-release">
+
+	<!-- DO NOT call this build file directly -->
+	<!-- Call a target in build.xml instead -->
+
+	<property name="root" value="." />
+
+	<echo message="Building in ${basedir}" />
+
+	<property file="${root}/build/local.properties" />
+	<property file="${root}/build/build.properties" />
+
+	<property name="work" value="." />
+	<property name="dist" value="${root}/dist" />
+	<property name="source.dir" value="src" />
+	<property name="out.dir" value="bin" />
+
+	<mkdir dir="${dist}" />
+
+	<!-- Dummy property file to prevent that Eclipse complains about imports in this build file -->
+	<property file="local.properties" />
+
+	<fail unless="sdk.dir" message="${sdk.dir} is not set in local.properties" />
+
+	<import file="${sdk.dir}/tools/ant/build.xml" />
+
+	<target name="clean" description="Clean up">
+		<delete dir="work" />
+		<delete dir="dist" />
+	</target>
+
+	<property file="${work}/project.properties" />
+
+	<target name="generate-build-properties">
+		<!-- Generate BuildProperties.java -->
+		<path id="android.antlibs">
+			<!-- ADT up to revision 22 -->
+			<pathelement path="${sdk.dir}/tools/lib/anttasks.jar" />
+			<!-- ADT starting from revision 23 -->
+			<pathelement path="${sdk.dir}/tools/lib/ant-tasks.jar" />
+		</path>
+		<taskdef name="xpath" classname="com.android.ant.XPathTask" classpathref="android.antlibs" />
+		<xpath input="${root}/AndroidManifest.xml" expression="/manifest/@android:versionName" output="randomapp.version.name" />
+		<xpath input="${root}/AndroidManifest.xml" expression="/manifest/@android:versionCode" output="randomapp.version.code" />
+
+		<mkdir dir="${work}/gen" />
+		<echoproperties format="xml" destfile="${work}/gen/BuildProperties.xml">
+			<propertyset>
+				<propertyref prefix="randomapp." />
+			</propertyset>
+		</echoproperties>
+		<xslt style="${root}/build/properties2java.xsl" in="${work}/gen/BuildProperties.xml" out="${work}/gen/be/norio/randomapp/BuildProperties.java"
+			force="true">
+			<param name="package" expression="be.norio.randomapp" />
+		</xslt>
+		<xslt style="${root}/build/properties2resource.xsl" in="${work}/gen/BuildProperties.xml" out="${work}/res/values/gen_build_properties.xml" force="true" />
+	</target>
+
+	<target name="copy-source">
+		<mkdir dir="${work}/src/be/norio/randomapp" />
+		<copy todir="${work}/src/be/norio/randomapp">
+			<fileset dir="${root}/src/be/norio/randomapp">
+				<include name="**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy-other">
+		<copy todir="${work}">
+			<fileset dir="${root}">
+				<include name=".classpath" />
+				<include name="proguard-project.txt" />
+				<include name="src/**" />
+				<include name="res/**" />
+				<include name="libs/**" />
+				<include name="assets/**" />
+				<exclude name="src/be/norio/randomapp" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="-pre-build" depends="generate-build-properties, copy-source, copy-other">
+		<!-- BEGIN WORKAROUND ADT 20 -->
+		<path id="project.all.jars.path">
+			<fileset dir="libs" includes="*.jar" />
+			<fileset dir="${sdk.dir}/tools/support" includes="annotations.jar" />
+		</path>
+		<!-- END WORKAROUND ADT 20 -->
+	</target>
+
+	<target name="build-release" depends="release" description="Build release">
+		<copy file="${out.final.file}" tofile="${dist}/be.norio.randomapp-${randomapp.version.name}-${env}.apk" />
+	</target>
+
+</project>

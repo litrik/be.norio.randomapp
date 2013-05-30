@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="be.norio.randomapp" default="all" basedir="..">
+
+	<target name="clean" description="Clean">
+		<delete dir="work" />
+		<delete dir="dist" />
+	</target>
+
+	<macrodef name="build.android">
+		<attribute name="env" />
+		<sequential>
+			<property file="build/local.properties" />
+			<mkdir dir="work/@{env}" />
+			<copy file="AndroidManifest.xml" tofile="work/@{env}/AndroidManifest.xml" />
+			<copy file="project.properties" tofile="work/@{env}/project.properties" />
+			<ant antfile="${basedir}/build/android.xml" target="build-release" inheritall="false" inheritrefs="false" dir="work/@{env}">
+				<property name="root" value="${basedir}" />
+				<property name="env" value="@{env}" />
+				<property file="${basedir}/build/properties/@{env}.properties" />
+			</ant>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="uninstall">
+		<attribute name="package" />
+		<sequential>
+			<echo message="Uninstalling @{package}..." />
+			<exec executable="adb">
+				<arg value="uninstall" />
+				<arg value="@{package}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="all" description="Builds all">
+		<build.android env="dev" />
+		<build.android env="prd" />
+	</target>
+
+	<target name="uninstall" description="Uninstall all APKs">
+		<uninstall package="be.norio.randomapp" />
+	</target>
+
+	<target name="eclipse" description="Build eclipse env">
+		<ant antfile="${basedir}/build/android.xml" target="generate-build-properties" inheritall="false" inheritrefs="false" dir="${basedir}">
+			<property name="root" value="${basedir}" />
+			<property file="${basedir}/build/local.properties" />
+			<property file="${basedir}/build/properties/dev.properties" />
+		</ant>
+	</target>
+
+</project>
