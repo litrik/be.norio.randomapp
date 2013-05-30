@@ -47,10 +47,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 
 		mPackageManager = getPackageManager();
-
 		mPackageName = PrefsUtils.getPreviousPackageName();
+
+		findViewById(R.id.main_new).setOnClickListener(this);
 		if (TextUtils.isEmpty(mPackageName)) {
-			launchRandomApp();
+			noPrevApp();
 			return;
 		}
 
@@ -63,14 +64,18 @@ public class MainActivity extends Activity implements OnClickListener {
 					.getPreviousDate()));
 			((ImageView) findViewById(R.id.main_icon)).setImageDrawable(mPackageManager.getApplicationIcon(info));
 			findViewById(R.id.main_app_details).setOnClickListener(this);
-			findViewById(R.id.main_new).setOnClickListener(this);
 			findViewById(R.id.main_info).setOnClickListener(this);
 			findViewById(R.id.main_uninstall).setOnClickListener(this);
 			findViewById(R.id.main_playstore).setOnClickListener(this);
 		} catch (NameNotFoundException e) {
-			launchRandomApp();
+			noPrevApp();
 		}
 
+	}
+
+	private void noPrevApp() {
+		findViewById(R.id.main_previous_app).setVisibility(View.GONE);
+		findViewById(R.id.main_first_run).setVisibility(View.VISIBLE);
 	}
 
 	protected void launchRandomApp() {

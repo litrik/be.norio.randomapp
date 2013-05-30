@@ -16,87 +16,104 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:text="@string/main_new_app" />
 
-    <TextView
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_spacing"
-        android:minWidth="240dp"
-        android:text="@string/main_prev_app" />
-
-    <RelativeLayout
-        android:id="@+id/main_app_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_spacing"
-        android:background="?android:attr/selectableItemBackground" >
-
-        <ImageView
-            android:id="@+id/main_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/default_spacing"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:id="@+id/main_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/main_icon"
-            android:text="App name"
-            android:textAppearance="@android:style/TextAppearance.Large" />
-
-        <TextView
-            android:id="@+id/main_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/main_name"
-            android:layout_below="@+id/main_name"
-            android:text="Last used"
-            android:textColor="@android:color/darker_gray" />
-    </RelativeLayout>
-
     <LinearLayout
-        android:id="@+id/main_app_actions"
+        android:id="@+id/main_previous_app"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/main_info"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_action_info" />
+            android:layout_marginBottom="@dimen/default_spacing"
+            android:minWidth="240dp"
+            android:text="@string/main_prev_app" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
-
-        <ImageButton
-            android:id="@+id/main_uninstall"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:id="@+id/main_app_details"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_action_trash" />
+            android:layout_marginBottom="@dimen/default_spacing"
+            android:background="?android:attr/selectableItemBackground" >
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
+            <ImageView
+                android:id="@+id/main_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/default_spacing"
+                android:src="@drawable/ic_launcher" />
 
-        <ImageButton
-            android:id="@+id/main_playstore"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_action_google_play" />
+            <TextView
+                android:id="@+id/main_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/main_icon"
+                android:text="App name"
+                android:textAppearance="@android:style/TextAppearance.Large" />
+
+            <TextView
+                android:id="@+id/main_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/main_name"
+                android:layout_below="@+id/main_name"
+                android:text="Last used"
+                android:textColor="@android:color/tertiary_text_light" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/main_app_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/main_info"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_info" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <ImageButton
+                android:id="@+id/main_uninstall"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_trash" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <ImageButton
+                android:id="@+id/main_playstore"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_google_play" />
+        </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/main_first_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/default_spacing"
+        android:paddingRight="@dimen/default_spacing"
+        android:text="@string/main_first_run"
+        android:textColor="@android:color/tertiary_text_light"
+        android:visibility="gone" />
 
 </LinearLayout>

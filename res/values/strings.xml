@@ -4,5 +4,6 @@
     <string name="app_name">Random App</string>
     <string name="main_new_app">Surprise Me!</string>
     <string name="main_prev_app">Previous Random App</string>
+    <string name="main_first_run">Welcome. Click on the button above to launch a randomly chosen app.\n\nCome back here to decide what to do with the app.</string>
 
 </resources>
